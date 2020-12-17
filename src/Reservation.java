@@ -1,7 +1,7 @@
 import java.time.LocalDate; // import the LocalDate class
 
-public class Reservation {
-    private static int reservationCount=0;
+public class Reservation implements Printable{
+    static int reservationCount=0;
     private int duration;
     private int id;
     private LocalDate dateCreated;
@@ -28,6 +28,6 @@ public class Reservation {
     }
 
     public void print() {
-        System.out.printf("id :%d, date created: %s, duration: %d, room: %d, customer: %s, employee: %s \n", this.id,this.dateCreated, this.duration, this.room.getNumber(), this.customer.getName(), this.employee.getName());
+        System.out.printf("id :%d, date created: %s, duration: %d Days, room: %d, customer: %s, employee: %s \n", this.id,this.dateCreated, this.duration, this.room.getNumber(), this.customer.getName(), this.employee.getName());
     }
 }

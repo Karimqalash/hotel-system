@@ -1,7 +1,7 @@
 public abstract class Employee extends Person{
     private String password;
 
-    private static int employeeCount;
+    static int employeeCount;
 
     public Employee(String name, String password){
         super(name);

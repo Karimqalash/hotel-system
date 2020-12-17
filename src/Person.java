@@ -1,5 +1,5 @@
 public class Person {
-    static private int id_count=0;
+    private static int id_count=0;
     private int id;
     private String name;
 

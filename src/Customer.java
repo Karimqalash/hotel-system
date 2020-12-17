@@ -1,10 +1,11 @@
-public class Customer extends Person {
+public class Customer extends Person implements Printable{
     private static int customerCount=0;
     private Reservation reservations[];
     private int reservationCount;
 
     public Customer(String name){
         super(name);
+        reservations = new Reservation[100];
         customerCount++;
         reservationCount=0;
     }
@@ -14,6 +15,10 @@ public class Customer extends Person {
     }
 
     public void addReservation(Reservation reservation) {
+        if(reservationCount >99){
+            System.out.println("sorry, you can't reserve any more");
+            return;
+        }
         reservations[reservationCount] = reservation;
         reservationCount++;
     }

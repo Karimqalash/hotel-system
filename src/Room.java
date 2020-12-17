@@ -1,5 +1,5 @@
-public class Room {
-    private int room_count = 0;
+public class Room implements Printable{
+    int room_count = 0;
     private String type;
     private int number;
     private Reservation reservation;
@@ -32,5 +32,9 @@ public class Room {
 
     public void free() {
         reservation = null;
+    }
+
+    public void print(){
+        System.out.printf("RoomNumber: %d, RoomType: %s, isReserved: %b",number,type,isReserved());
     }
 }
