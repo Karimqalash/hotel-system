@@ -1,12 +1,12 @@
 public class Person {
-    private static int idCounter;
+    static private int id_count=0;
     private int id;
     private String name;
 
-    public Person(String name){
-        idCounter++;
-        this.name = name;
-        this.id = idCounter;
+    public Person(String name) {
+        this.name=name;
+        this.id=id_count;
+        id_count++;
     }
 
     public int getId() {
