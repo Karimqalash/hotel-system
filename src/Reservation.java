@@ -28,6 +28,6 @@ public class Reservation {
     }
 
     public void print() {
-        System.out.printf("id :%d, date created: %s, duration: %d, customer: %s, employee: %s \n", this.id,this.dateCreated, this.duration, this.customer.getName(), this.employee.getName());
+        System.out.printf("id :%d, date created: %s, duration: %d, room: %d, customer: %s, employee: %s \n", this.id,this.dateCreated, this.duration, this.room.getNumber(), this.customer.getName(), this.employee.getName());
     }
 }

@@ -18,6 +18,14 @@ public class Room {
         reservation = new Reservation(duration, this, customer,employee);
     }
 
+    public int getNumber() {
+        return number;
+    }
+
+    public String getType() {
+        return type;
+    }
+
     public boolean isReserved() {
         return reservation != null;
     }
