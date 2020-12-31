@@ -2,6 +2,9 @@ package com.example.hotelsys.models;
 
 import com.sun.istack.NotNull;
 import org.hibernate.annotations.NotFound;
+import org.springframework.web.bind.MissingServletRequestParameterException;
+import org.springframework.web.bind.annotation.RequestParam;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -12,16 +15,40 @@ public class Room {
     @Id
     @GeneratedValue
     private Long id;
-    @NotNull
+
     private String type;
     private Float price;
     private Integer number;
+    private String ac;
+    private Integer beds;
 
     public Room(){}
-    public Room(String type ,Float price, Integer number){
+    public Room(String type ,String ac, Float price, Integer number,Integer beds ){
         this.number = number;
         this.price = price;
         this.type = type;
+        this.ac = ac;
+        this.beds = beds;
+    }
+
+    public void setAc(String ac) {
+        this.ac = ac;
+    }
+
+    public void setBeds(Integer beds) {
+        this.beds = beds;
+    }
+
+    public Float getPrice() {
+        return price;
+    }
+
+    public String getAc() {
+        return ac;
+    }
+
+    public Integer getBeds() {
+        return beds;
     }
 
     public int getNumber() {
@@ -48,25 +75,26 @@ public class Room {
     public void setNumber(Integer number) {
         this.number = number;
     }
-//    public boolean isReserved() {
-//        return reservation != null;
-//    }
-
-//    public void free() {
-//        reservation = null;
-//    }
-
-//    public void print(){
-//        System.out.printf("RoomNumber: %d, RoomType: %s, isReserved: %b",number,type,isReserved());
-//    }
-
-    public HashMap<String,Object> toJSON() {
-        HashMap<String,Object> map = new HashMap<>();
-        map.put("id",id);
-        map.put("price",price);
-        map.put("type",type);
-        map.put("number",number);
-        return map;
+    public static boolean validateData(@RequestParam String type,
+                                       @RequestParam String ac,
+                                       @RequestParam float price,
+                                       @RequestParam int number,
+                                       @RequestParam int beds) throws MissingServletRequestParameterException {
+        if(type.isEmpty() || ac.isEmpty()){
+            throw new MissingServletRequestParameterException("type","String");
+        }
+        return true;
     }
 }
+ /*
+CREATE TABLE ROOM(
+        id int auto_increment ,
+        roomType VARCHAR(100),
+        ac VARCHAR(10),
+        roomNumber int not null,
+        beds int not null,
+        reserveFrom DATE,
+        reserveTo DATE,
+        PRIMARY KEY(id));
+     */
 

@@ -3,7 +3,6 @@ import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.xml.crypto.Data;
 import java.util.Date;
 //import java.time; // import the LocalDate class
 
@@ -13,30 +12,59 @@ public class Reservation {
     @GeneratedValue
     private Long id;
     @Basic
-    private java.sql.Date  reservFrom;
+    private java.sql.Date arriveDate;
     @Basic
-    private java.sql.Date reservTo;
-    private String roomType;
+    private java.sql.Date departDate;
+    private String roomType,name,email,phoneNumber;
     private int roomNumber;
 
     public Reservation(){}
-    public Reservation(String roomType, int roomNumber, java.sql.Date reservFrom, java.sql.Date reservTo){
+    public Reservation(String roomType,String name, String email, String phoneNumber,
+                       int roomNumber, java.sql.Date arriveDate,
+                       java.sql.Date departDate){
         this.roomType = roomType;
+        this.name = name;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
         this.roomNumber = roomNumber;
-        this.reservFrom = reservFrom;
-        this.reservTo = reservTo;
+        this.arriveDate = arriveDate;
+        this.departDate = departDate;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
     public Long getId() {
         return id;
     }
 
-    public Date getReservFrom() {
-        return reservFrom;
+    public Date getArriveDate() {
+        return arriveDate;
     }
 
-    public Date getReservTo() {
-        return reservTo;
+    public Date getDepartDate() {
+        return departDate;
     }
 
     public String getRoomType() {
@@ -51,12 +79,12 @@ public class Reservation {
         this.id = id;
     }
 
-    public void setReservFrom(java.sql.Date reservFrom) {
-        this.reservFrom = reservFrom;
+    public void setArriveDate(java.sql.Date reservFrom) {
+        this.arriveDate = reservFrom;
     }
 
-    public void setReservTo(java.sql.Date reservTo) {
-        this.reservTo = reservTo;
+    public void setDepartDate(java.sql.Date reservTo) {
+        this.departDate = reservTo;
     }
 
     public void setRoomType(String roomType) {
@@ -71,9 +99,22 @@ public class Reservation {
     /*
 CREATE TABLE RESERVATION(
         id int auto_increment ,
+        name VARCHAR(100) NOT NULL,
+        email VARCHAR(100) NOT NULL,
+        phoneNumber VARCHAR(11) NOT NULL,
         roomType VARCHAR(100),
         roomNumber int not null,
-        reservFrom DATE,
-        reservTo DATE,
+        arriveDate DATE,
+        departDate DATE,
         PRIMARY KEY(id));
      */
+  /*{
+          id: 2,
+          name: "karim",
+          phone: "0114444",
+          email: "karim@gmial.com",
+          arrive_date: "1/3/2021",
+          depart_date: "5/3/2021",
+          room_type: "King",
+          room_number: 105,
+          }*/

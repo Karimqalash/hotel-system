@@ -17,24 +17,28 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping(value = "/api/reserve")
+//@RequestMapping(value = "/api/bookings")
 public class ReservationApi {
     private static SessionFactory factory;
 
     @Autowired
     ReservationRepository reservationRepository;
 
-    @PostMapping(path = "/add")
+    @PostMapping(path = "/api/bookings/")
     public Reservation reserve(@RequestParam String roomType,
+                               @RequestParam String name,
+                               @RequestParam String email,
+                               @RequestParam String phoneNumber,
                                @RequestParam int roomNumber,
-                               @RequestParam java.sql.Date reservFrom,
-                               @RequestParam java.sql.Date reservTo){
-        Reservation reservation = new Reservation(roomType,roomNumber,reservFrom,reservTo);
+                               @RequestParam java.sql.Date arriveDate,
+                               @RequestParam java.sql.Date departDate){
+
+        Reservation reservation = new Reservation(roomType,name,email,phoneNumber,roomNumber,arriveDate,departDate);
         reservationRepository.save(reservation);
         return reservation;
     }
 
-    @DeleteMapping(path = "/remove/{id}")
+    @DeleteMapping(path = "/api/bookings/{id}")
     public Optional<Reservation> checkout(@PathVariable Long id){
         Optional<Reservation> op = reservationRepository.findById(id);
         if(op.isPresent()){
@@ -44,7 +48,7 @@ public class ReservationApi {
         return Optional.ofNullable(null);
     }
 
-    @GetMapping(path = "/all/{roomNumber}")
+    @GetMapping(path = "/api/bookings/{roomNumber}")
     public List<Integer> rservedDaysWith(@PathVariable int roomNumber){
         return reservedDays(roomNumber);
 //        return findByRoomNumber(roomNumber);
@@ -54,8 +58,8 @@ public class ReservationApi {
         List<Reservation> list= findByRoomNumber(roomNumber);
         List<Integer> res = new ArrayList<>();
         list.forEach(reserve -> {
-            Integer from = Integer.parseInt(reserve.getReservFrom().toString().substring(8));
-            Integer to = Integer.parseInt(reserve.getReservTo().toString().substring(8));
+            Integer from = Integer.parseInt(reserve.getArriveDate().toString().substring(8));
+            Integer to = Integer.parseInt(reserve.getDepartDate().toString().substring(8));
             for (int i = from; i <=to; i++) {
                 res.add(i);
             }
