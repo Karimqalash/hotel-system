@@ -25,7 +25,7 @@ public class ReservationApi {
     ReservationRepository reservationRepository;
 
     @PostMapping(path = "/api/bookings/")
-    public Reservation reserve(@RequestParam String roomType,
+    public List<Reservation> reserve(@RequestParam String roomType,
                                @RequestParam String name,
                                @RequestParam String email,
                                @RequestParam String phoneNumber,
@@ -35,7 +35,9 @@ public class ReservationApi {
 
         Reservation reservation = new Reservation(roomType,name,email,phoneNumber,roomNumber,arriveDate,departDate);
         reservationRepository.save(reservation);
-        return reservation;
+        List<Reservation> reservationList = new ArrayList<>();
+        reservationList.add(reservation);
+        return reservationList;
     }
 
     @DeleteMapping(path = "/api/bookings/{id}")
@@ -48,7 +50,7 @@ public class ReservationApi {
         return Optional.ofNullable(null);
     }
 
-    @GetMapping(path = "/api/bookings/{roomNumber}")
+    @GetMapping(path = "/api/bookings/Days/{roomNumber}")
     public List<Integer> rservedDaysWith(@PathVariable int roomNumber){
         return reservedDays(roomNumber);
 //        return findByRoomNumber(roomNumber);
