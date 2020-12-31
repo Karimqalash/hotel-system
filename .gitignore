@@ -18,7 +18,7 @@
 *.iws
 *.iml
 *.ipr
-*.xml
+#*.xml
 *.cmd
 
 
