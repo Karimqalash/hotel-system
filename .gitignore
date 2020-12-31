@@ -20,7 +20,7 @@ target/
 *.ipr
 *.xml
 *.cmd
-lib/
+
 
 ### NetBeans ###
 /nbproject/private/
