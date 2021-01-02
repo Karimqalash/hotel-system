@@ -12,39 +12,23 @@ import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 
 @RestController
 //@RequestMapping (path = "/api/rooms")
 public class MainController {
-    @PostMapping(path = "/api/rooms")
-    public @ResponseBody Room addRoom(@RequestParam String type,
-                                      @RequestParam String ac,
-                                      @RequestParam float price,
-                                      @RequestParam int number,
-                                      @RequestParam int beds) throws MissingServletRequestParameterException {
-        Room.validateData(type, ac, price, number, beds);
-        Room nr = new Room(type,ac,price,number,beds);
-        nr = roomRepository.save(nr);
-//      roomRepository.
-        return nr;
-
-    }
-
     @Autowired
     RoomRepository roomRepository;
 
-@GetMapping(path = "/")
-public String hello(){
-    return "hi i'm running dont worry";
-}
+    @PostMapping(path = "/api/rooms",consumes = "application/json")
+    public @ResponseBody Room addRoom(@RequestBody com.fasterxml.jackson.databind.JsonNode payload) throws MissingServletRequestParameterException {
+        Room nr = new Room(payload);
+        nr = roomRepository.save(nr);
+        return  nr;
+    }
 
     @DeleteMapping(path = "/api/rooms/{id}")
-    public Optional<Room> deletRoom(@PathVariable Long id){
-
+    public Optional<Room> deleteRoom(@PathVariable Long id){
         Optional<Room> it = roomRepository.findById(id);
         if(it.isPresent()){
             roomRepository.deleteById(id);
@@ -60,16 +44,4 @@ public String hello(){
         it.forEach(item -> rooms.add(item));
         return rooms;
     }
-
-//    @ExceptionHandler(Exception.class)
-//    public ModelAndView handleError(HttpServletRequest req, Exception ex) {
-////        logger.error("Request: " + req.getRequestURL() + " raised " + ex);
-//
-//        ModelAndView mav = new ModelAndView();
-//        mav.addObject("exception", ex);
-//        mav.addObject("url", req.getRequestURL());
-//        mav.setViewName("error");
-//        return mav;
-//    }
-
 }

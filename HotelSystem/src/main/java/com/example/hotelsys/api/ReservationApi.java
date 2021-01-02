@@ -25,15 +25,9 @@ public class ReservationApi {
     ReservationRepository reservationRepository;
 
     @PostMapping(path = "/api/bookings/")
-    public List<Reservation> reserve(@RequestParam String roomType,
-                               @RequestParam String name,
-                               @RequestParam String email,
-                               @RequestParam String phoneNumber,
-                               @RequestParam int roomNumber,
-                               @RequestParam java.sql.Date arriveDate,
-                               @RequestParam java.sql.Date departDate){
+    public List<Reservation> reserve(@RequestBody com.fasterxml.jackson.databind.JsonNode payload){
 
-        Reservation reservation = new Reservation(roomType,name,email,phoneNumber,roomNumber,arriveDate,departDate);
+        Reservation reservation = new Reservation(payload);
         reservationRepository.save(reservation);
         List<Reservation> reservationList = new ArrayList<>();
         reservationList.add(reservation);
@@ -60,9 +54,9 @@ public class ReservationApi {
         List<Reservation> list= findByRoomNumber(roomNumber);
         List<Integer> res = new ArrayList<>();
         list.forEach(reserve -> {
-            Integer from = Integer.parseInt(reserve.getArriveDate().toString().substring(8));
-            Integer to = Integer.parseInt(reserve.getDepartDate().toString().substring(8));
-            for (int i = from; i <=to; i++) {
+            Integer from = Integer.parseInt(reserve.getArriveDate().substring(8));
+            Integer to = Integer.parseInt(reserve.getDepartDate().substring(8));
+            for (int i = from; i <= to; i++) {
                 res.add(i);
             }
         });

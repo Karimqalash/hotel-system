@@ -1,8 +1,12 @@
 package com.example.hotelsys.models;
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.hibernate.boot.model.relational.Database;
+
 import javax.persistence.Basic;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import java.time.LocalDate;
 import java.util.Date;
 //import java.time; // import the LocalDate class
 
@@ -11,24 +15,22 @@ public class Reservation {
     @Id
     @GeneratedValue
     private Long id;
-    @Basic
-    private java.sql.Date arriveDate;
-    @Basic
-    private java.sql.Date departDate;
-    private String roomType,name,email,phoneNumber;
+//    @JsonFormat(pattern="yyyy-MM-dd")
+//    private java.sql.Date ;
+//    @JsonFormat(pattern="yyyy-MM-dd")
+//    private java.util.Date ;
+    private String roomType,name,email,phoneNumber,departDate,arriveDate;
     private int roomNumber;
 
     public Reservation(){}
-    public Reservation(String roomType,String name, String email, String phoneNumber,
-                       int roomNumber, java.sql.Date arriveDate,
-                       java.sql.Date departDate){
-        this.roomType = roomType;
-        this.name = name;
-        this.email = email;
-        this.phoneNumber = phoneNumber;
-        this.roomNumber = roomNumber;
-        this.arriveDate = arriveDate;
-        this.departDate = departDate;
+    public Reservation(com.fasterxml.jackson.databind.JsonNode payload){
+        this.roomType = payload.get("roomType").asText();
+        this.name = payload.get("name").asText();
+        this.email = payload.get("email").asText();
+        this.phoneNumber = payload.get("phoneNumber").asText();
+        this.roomNumber = payload.get("roomNumber").asInt();
+        this.arriveDate = payload.get("arriveDate").asText();
+        this.departDate = payload.get("departDate").asText();
     }
 
     public void setName(String name) {
@@ -59,11 +61,11 @@ public class Reservation {
         return id;
     }
 
-    public Date getArriveDate() {
+    public String getArriveDate() {
         return arriveDate;
     }
 
-    public Date getDepartDate() {
+    public String getDepartDate() {
         return departDate;
     }
 
@@ -79,11 +81,11 @@ public class Reservation {
         this.id = id;
     }
 
-    public void setArriveDate(java.sql.Date reservFrom) {
+    public void setArriveDate(String reservFrom) {
         this.arriveDate = reservFrom;
     }
 
-    public void setDepartDate(java.sql.Date reservTo) {
+    public void setDepartDate(String reservTo) {
         this.departDate = reservTo;
     }
 

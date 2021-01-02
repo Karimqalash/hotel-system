@@ -5,10 +5,14 @@ import org.hibernate.annotations.NotFound;
 import org.springframework.web.bind.MissingServletRequestParameterException;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import javax.imageio.ImageTranscoder;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.criteria.CriteriaBuilder;
 import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 @Entity
 public class Room {
@@ -17,18 +21,18 @@ public class Room {
     private Long id;
 
     private String type;
-    private Float price;
+    private Double price;
     private Integer number;
     private String ac;
     private Integer beds;
 
     public Room(){}
-    public Room(String type ,String ac, Float price, Integer number,Integer beds ){
-        this.number = number;
-        this.price = price;
-        this.type = type;
-        this.ac = ac;
-        this.beds = beds;
+    public Room(com.fasterxml.jackson.databind.JsonNode payload){
+        this.type = payload.get("type").asText();
+        this.ac = payload.get("ac").asText();
+        this.number = payload.get("number").asInt();
+        this.beds = payload.get("beds").asInt();
+        this.price = payload.get("price").asDouble();
     }
 
     public void setAc(String ac) {
@@ -39,7 +43,7 @@ public class Room {
         this.beds = beds;
     }
 
-    public Float getPrice() {
+    public Double getPrice() {
         return price;
     }
 
@@ -68,23 +72,20 @@ public class Room {
         this.type = type;
     }
 
-    public void setPrice(Float price) {
+    public void setPrice(Double price) {
         this.price = price;
     }
 
     public void setNumber(Integer number) {
         this.number = number;
     }
-    public static boolean validateData(@RequestParam String type,
-                                       @RequestParam String ac,
-                                       @RequestParam float price,
-                                       @RequestParam int number,
-                                       @RequestParam int beds) throws MissingServletRequestParameterException {
-        if(type.isEmpty() || ac.isEmpty()){
-            throw new MissingServletRequestParameterException("type","String");
-        }
-        return true;
-    }
+//    public static boolean validateData(Map<String,Object> payload) throws MissingServletRequestParameterException {
+//        this(payload);
+//        if(type.isEmpty() || ac.isEmpty()){
+//            throw new MissingServletRequestParameterException("type","String");
+//        }
+//        return true;
+//    }
 }
  /*
 CREATE TABLE ROOM(
