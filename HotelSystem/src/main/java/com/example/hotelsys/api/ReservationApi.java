@@ -34,6 +34,14 @@ public class ReservationApi {
         return reservationList;
     }
 
+    @GetMapping(path = "api/bookings")
+    public List<Reservation> getBookings(){
+        List<Reservation> li = new ArrayList<>();
+        Iterable<Reservation> bookings = reservationRepository.findAll();
+        bookings.forEach(item ->{li.add(item);});
+        return li;
+    }
+
     @DeleteMapping(path = "/api/bookings/{id}")
     public Optional<Reservation> checkout(@PathVariable Long id){
         Optional<Reservation> op = reservationRepository.findById(id);
