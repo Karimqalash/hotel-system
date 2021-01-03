@@ -28,13 +28,16 @@ public class MainController {
     }
 
     @DeleteMapping(path = "/api/rooms/{id}")
-    public Optional<Room> deleteRoom(@PathVariable Long id){
+    public HashMap<String,String> deleteRoom(@PathVariable Long id){
+        HashMap<String,String> l = new HashMap<>();
         Optional<Room> it = roomRepository.findById(id);
         if(it.isPresent()){
             roomRepository.deleteById(id);
-            return it;
+            l.put("success","true");
+            return l;
         }
-        return Optional.ofNullable(null);
+        l.put("success","false");
+        return l;
     }
 
     @GetMapping(path = "/api/rooms")

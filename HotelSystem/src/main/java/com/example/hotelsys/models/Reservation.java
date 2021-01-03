@@ -110,6 +110,10 @@ CREATE TABLE RESERVATION(
         departDate DATE,
         PRIMARY KEY(id));
      */
+    /*
+        CREATE DATABASE hotel_sys_dev;
+     */
+
   /*{
           id: 2,
           name: "karim",
